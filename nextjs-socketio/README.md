@@ -1,4 +1,15 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Live Chat Next JS & Socket IO
+
+## Prerequisites
+
+- [NextJS](https://nextjs.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [Socket.IO](https://socket.io/)
+
+## Requirement
+
+- [Node 16 or Higher](https://nodejs.org/en/download)
+- Better using [NVM 16 or Higher](https://github.com/nvm-sh/nvm) it will be include NPM and Node
 
 ## Getting Started
 
