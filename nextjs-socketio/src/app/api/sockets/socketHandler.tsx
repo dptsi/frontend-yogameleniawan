@@ -13,6 +13,10 @@ export default function SocketHandler(req: any, res: any) {
 
     const onConnection = (socket: any) => {
         messageHandler(io, socket);
+
+        socket.on('disconnect', () => {
+            console.log('user disconnected');
+        });
     };
 
     io.on("connection", onConnection);
