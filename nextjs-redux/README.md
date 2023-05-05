@@ -1,5 +1,9 @@
 # NextJs & Redux State Management
 
+## Course Video
+
+- [Video](https://www.udemy.com/course/nextjs-build-full-stack-apps-with-nextjs-using-redux/)
+
 ## Prerequisites
 
 - [NextJS](https://nextjs.org/)
