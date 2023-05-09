@@ -1,10 +1,21 @@
 import Room from '../../models/room';
 
 const allRooms = async (req, res) => {
-    res.status(200).json({
-        success: true,
-        message: 'This route will show all rooms in database.'
-    })
+
+    try {
+        const rooms = await Room.find();
+
+        res.status(200).json({
+            success: true,
+            count: rooms.length,
+            rooms
+        })
+    } catch (error) {
+        res.status(400).json({
+            success: false,
+            error: error.message
+        })
+    }
 }
 
 const newRoom = async (req, res) => {
