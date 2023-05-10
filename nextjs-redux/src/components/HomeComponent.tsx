@@ -1,4 +1,11 @@
+import React from 'react'
+
+import { useSelector } from 'react-redux';
+
 const HomeComponent = () => {
+
+    const { rooms } = useSelector((state: any) => state.allRooms);
+
     return (
         <section id="rooms" className="container mt-5">
 

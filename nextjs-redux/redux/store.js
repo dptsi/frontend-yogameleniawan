@@ -1,4 +1,4 @@
-import { createStore, applyMiddleware } from 'redux'
+import { legacy_createStore as createStore, applyMiddleware } from 'redux'
 import { HYDRATE, createWrapper } from 'next-redux-wrapper'
 import thunkMiddleware from 'redux-thunk'
 import reducers from './reducers/reducers'
@@ -20,7 +20,7 @@ const reducer = (state, action) => {
         if (state.count) nextState.count = state.count // preserve count value on client side navigation
         return nextState
     } else {
-        return state
+        return reducers(state, action)
     }
 }
 
