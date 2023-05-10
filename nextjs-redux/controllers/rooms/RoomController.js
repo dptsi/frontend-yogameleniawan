@@ -1,47 +1,36 @@
 import Room from '../../models/room';
 import mongoose from "mongoose";
 import ErrorHandler from '../../utils/errors/errorHandler';
+import catchAsyncError from '../../middlewares/catchAsyncError';
 
 // Get All Rooms => /api/rooms [GET]
-const allRooms = async (req, res) => {
+const allRooms = catchAsyncError(async (req, res) => {
 
-    try {
-        const rooms = await Room.find();
+    const rooms = await Room.find();
 
-        res.status(200).json({
-            success: true,
-            count: rooms.length,
-            rooms
-        })
-    } catch (error) {
-        res.status(400).json({
-            success: false,
-            error: error.message
-        })
-    }
-}
+    res.status(200).json({
+        success: true,
+        count: rooms.length,
+        rooms
+    })
+})
 
 // Create a new Room => /api/rooms [POST]
 
-const newRoom = async (req, res) => {
-    try {
-        const room = await Room.create(req.body);
+const newRoom = catchAsyncError(async (req, res) => {
 
-        res.status(200).json({
-            success: true,
-            room
-        })
-    } catch (error) {
-        res.status(400).json({
-            success: false,
-            error: error.message
-        })
-    }
-}
+    const room = await Room.create(req.body);
+
+    res.status(200).json({
+        success: true,
+        room
+    })
+
+})
 
 
 // Get Single Room Details => /api/rooms/:id [GET]
-const getSingleRoomMiddleware = async (req, res, next) => {
+const getSingleRoomMiddleware = catchAsyncError(async (req, res, next) => {
     const room = await Room.findById(req.query.id);
 
     if (!room) {
@@ -50,9 +39,9 @@ const getSingleRoomMiddleware = async (req, res, next) => {
 
     return next()
 
-}
+})
 
-const getSingleRoom = async (req, res) => {
+const getSingleRoom = catchAsyncError(async (req, res) => {
     try {
         const room = await Room.findById(req.query.id);
 
@@ -66,10 +55,10 @@ const getSingleRoom = async (req, res) => {
             error: error.message
         })
     }
-}
+})
 
 // Update Room Details => /api/rooms/:id [PUT]
-const updateRoom = async (req, res) => {
+const updateRoom = catchAsyncError(async (req, res) => {
     try {
         let room = await Room.findById(req.query.id);
 
@@ -93,10 +82,10 @@ const updateRoom = async (req, res) => {
             error: error.message
         })
     }
-}
+})
 
 // Delete Room Details => /api/rooms/:id [DELETE]
-const deleteRoom = async (req, res) => {
+const deleteRoom = catchAsyncError(async (req, res) => {
     try {
         const room = await Room.findByIdAndDelete(req.query.id);
 
@@ -116,7 +105,7 @@ const deleteRoom = async (req, res) => {
             error: error.message
         })
     }
-}
+})
 
 export {
     allRooms,

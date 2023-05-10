@@ -1,6 +1,6 @@
 import ErrorHandler from '../utils/errors/errorHandler';
 
-export default (err, req, res, next) => {
+const onError = (err, req, res, next) => {
     err.statusCode = err.statusCode || 500;
 
     let error = { ...err }
@@ -20,6 +20,11 @@ export default (err, req, res, next) => {
         error = new ErrorHandler(message, 400);
     }
 
+    if (err.name === 'TypeError') {
+        const message = `Type Error: ${err.message}`
+        error = new ErrorHandler(message, 400);
+    }
+
     res.status(err.statusCode).json({
         success: false,
         error,
@@ -27,3 +32,5 @@ export default (err, req, res, next) => {
         stack: error.stack
     })
 }
+
+export default onError;
