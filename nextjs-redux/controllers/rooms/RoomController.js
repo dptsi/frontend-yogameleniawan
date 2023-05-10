@@ -56,13 +56,6 @@ const getSingleRoom = async (req, res) => {
     try {
         const room = await Room.findById(req.query.id);
 
-        if (!room) {
-            // return next()
-            // return { props: { notFound: true } };
-            throw new ErrorHandler("You can't update other user's profile", 404);
-            // return next(new ErrorHandler('Room not found with this ID', 404))
-        }
-
         res.status(200).json({
             success: true,
             room
