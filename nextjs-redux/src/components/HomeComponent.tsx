@@ -1,11 +1,16 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 
 import { useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import RoomItem from './room/RoomItem';
 
 const HomeComponent = () => {
 
     const { rooms } = useSelector((state: any) => state.allRooms);
+
+    useEffect(() => {
+        toast.success('Welcome to Nextjs Redux');
+    }, [])
 
     return (
         <section id="rooms" className="container mt-5">

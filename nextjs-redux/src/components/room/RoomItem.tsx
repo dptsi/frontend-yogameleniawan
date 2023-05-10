@@ -6,7 +6,7 @@ type Props = {
 }
 
 const RoomItem = ({ room }: Props) => {
-    console.log(room);
+
     return (
         <div className="col-sm-12 col-md-6 col-lg-3 my-3">
             <div className="card p-2">
