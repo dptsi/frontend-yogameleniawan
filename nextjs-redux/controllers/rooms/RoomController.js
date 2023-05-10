@@ -2,15 +2,29 @@ import Room from '../../models/room';
 import mongoose from "mongoose";
 import ErrorHandler from '../../utils/errors/errorHandler';
 import catchAsyncError from '../../middlewares/catchAsyncError';
+import APIFeatures from './../../utils/features/apiFeatures';
 
 // Get All Rooms => /api/rooms [GET]
 const allRooms = catchAsyncError(async (req, res) => {
 
-    const rooms = await Room.find();
+    const resPerPage = 4;
+    const roomsCount = await Room.countDocuments();
+
+    const apiFeatures = new APIFeatures(Room.find(), req.query)
+        .search()
+        .filter();
+
+    let rooms = await apiFeatures.query;
+    let filterRoomsCount = rooms.length;
+
+    apiFeatures.pagination(resPerPage);
+    rooms = await apiFeatures.query.clone();
 
     res.status(200).json({
         success: true,
-        count: rooms.length,
+        roomsCount,
+        resPerPage,
+        filterRoomsCount,
         rooms
     })
 })
