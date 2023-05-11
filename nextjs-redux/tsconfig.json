@@ -30,6 +30,7 @@
     "**/*.tsx",
     "src/pages/index.jsx",
     "src/pages/room/[id].jsx",
+    "src/pages/api/me.js",
   ],
   "exclude": [
     "node_modules"
