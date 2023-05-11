@@ -1,15 +1,20 @@
 import React, { useEffect } from 'react'
 
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import RoomItem from './room/RoomItem';
 
+import { cleanRoomsErrors } from '../../redux/actions/roomActions';
+
 const HomeComponent = () => {
 
-    const { rooms } = useSelector((state: any) => state.allRooms);
+    const dispatch = useDispatch();
+
+    const { rooms, error } = useSelector((state: any) => state.allRooms);
 
     useEffect(() => {
-        toast.success('Welcome to Nextjs Redux');
+        toast.error(error);
+        // dispatch<any>(cleanRoomsErrors())
     }, [])
 
     return (
