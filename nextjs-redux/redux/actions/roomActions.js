@@ -12,13 +12,15 @@ import {
 } from './../constants/roomConstants';
 
 // Get all rooms
-export const getRooms = (req) => async (dispatch) => {
+export const getRooms = (req, query) => async (dispatch) => {
     try {
 
         const { origin } = absoluteUrl(req);
 
         // const link = `${origin}/api/rooms?page=${currentPage}&location=${location}&guests=${guests}&category=${category}`;
-        const link = `${origin}/api/rooms`;
+        const link = `${origin}/api/rooms?page=${query.page ?? 1}&location=${query.location ?? ''}`;
+
+        console.log(link);
 
         const { data } = await axios.get(link);
 
