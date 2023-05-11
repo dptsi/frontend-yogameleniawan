@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { toast } from 'react-toastify';
 import RoomItem from './room/RoomItem';
 import Pagination from 'react-js-pagination';
-import router from 'next/router';
+
 import Link from 'next/link';
 
 const HomeComponent = () => {
@@ -14,9 +14,9 @@ const HomeComponent = () => {
     const dispatch = useDispatch();
     const router = useRouter();
 
-    const { rooms, resPerPage, roomsCount, filteredRoomsCount, error } = useSelector((state: any) => state.allRooms);
+    const { rooms, resPerPage, roomsCount, filterRoomsCount, error } = useSelector((state: any) => state.allRooms);
 
-    let { page = 1 } = router.query;
+    let { page = 1, location } = router.query;
     page = Number(page) || 1;
 
     useEffect(() => {
@@ -24,8 +24,27 @@ const HomeComponent = () => {
         // dispatch<any>(cleanRoomsErrors())
     }, [])
 
+    let queryParams: any;
+    if (typeof window !== 'undefined') {
+        queryParams = new URLSearchParams(window.location.search)
+    }
+
     const handlePagination = (pageNumber: number) => {
-        router.push(`/?page=${pageNumber}`)
+        if (queryParams.has('page')) {
+            queryParams.set('page', pageNumber)
+        } else {
+            queryParams.append('page', pageNumber)
+        }
+
+        router.replace({
+            search: queryParams.toString()
+        })
+    }
+
+    let count: number = roomsCount;
+
+    if (location) {
+        count = filterRoomsCount;
     }
 
     return (
@@ -33,7 +52,7 @@ const HomeComponent = () => {
 
             <section id="rooms" className="container mt-5">
 
-                <h2 className='mb-3 ml-2 stays-heading'>Stays in New York</h2>
+                <h2 className='mb-3 ml-2 stays-heading'>{location ? `Rooms in ${location}` : 'All Rooms'}</h2>
 
                 <Link href='/search' className='ml-2 back-to-search'>
                     <i className='fa fa-arrow-left'></i> Back to Search
@@ -50,7 +69,7 @@ const HomeComponent = () => {
                 </div>
             </section>
             {
-                resPerPage < roomsCount &&
+                resPerPage < count &&
                 <div className="d-flex justify-content-center mt-5">
                     <Pagination
                         activePage={page}

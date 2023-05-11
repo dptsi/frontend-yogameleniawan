@@ -14,13 +14,13 @@ import {
 // Get all rooms
 export const getRooms = (req, query) => async (dispatch) => {
     try {
-
+        let { page = 1, location, guests, category } = query;
         const { origin } = absoluteUrl(req);
 
-        // const link = `${origin}/api/rooms?page=${currentPage}&location=${location}&guests=${guests}&category=${category}`;
-        const link = `${origin}/api/rooms?page=${query.page ?? 1}&location=${query.location ?? ''}`;
+        let link = `${origin}/api/rooms?page=${page ?? 1}&location=${location ?? ''}`;
 
-        console.log(link);
+        if (guests) link = link.concat(`&guestCapacity=${guests}`)
+        if (category) link = link.concat(`&category=${category}`)
 
         const { data } = await axios.get(link);
 
