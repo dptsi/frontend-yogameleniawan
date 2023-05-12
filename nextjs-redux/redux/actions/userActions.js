@@ -5,7 +5,10 @@ import {
     CLEAR_ERRORS,
     LOAD_USER_REQUEST,
     LOAD_USER_SUCCESS,
-    LOAD_USER_FAIL
+    LOAD_USER_FAIL,
+    UPDATE_PROFILE_SUCCESS,
+    UPDATE_PROFILE_FAIL,
+    UPDATE_PROFILE_REQUEST
 
 } from './../constants/userConstants';
 import axios from 'axios';
@@ -62,4 +65,32 @@ export const loadUser = () => async (dispatch) => {
             payload: error.response.data.message
         })
     }
+}
+
+// Update profile
+export const updateProfile = (userData) => async (dispatch) => {
+    try {
+        dispatch({ type: UPDATE_PROFILE_REQUEST })
+
+        const config = {
+            headers: {
+                'Content-Type': 'multipart/form-data'
+            }
+        }
+
+        const { data } = await axios.put('/api/me/update', userData, config);
+
+        dispatch({
+            type: UPDATE_PROFILE_SUCCESS,
+            payload: data.success
+        })
+
+    } catch (error) {
+
+        dispatch({
+            type: UPDATE_PROFILE_FAIL,
+            payload: error.response.data.message
+        })
+    }
+
 }

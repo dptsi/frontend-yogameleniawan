@@ -4,10 +4,7 @@ import User from '../../../../models/users';
 import dbConnect from '../../../../config/database/DatabaseConnection';
 import CredentialsProvider from "next-auth/providers/credentials"
 
-export default NextAuth({
-    // session:{
-    //     jwt:true
-    // },
+export const authOptions = {
     session: {
         strategy: 'jwt'
     },
@@ -47,4 +44,6 @@ export default NextAuth({
             return Promise.resolve(session)
         }
     }
-})
+}
+
+export default NextAuth(authOptions)
